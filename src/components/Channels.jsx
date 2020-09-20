@@ -1,10 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import gon from 'gon';
-
-const renderChannels = () => {
-  const { channels, currentChannelId } = gon;
+const renderChannels = (channels, currentChannelId) => {
   if (channels.length === 0) {
     return null;
   }
@@ -35,7 +32,7 @@ const renderChannels = () => {
   );
 };
 
-const Channels = () => {
+const Channels = ({ channels, currentChannelId }) => {
   return (
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
@@ -47,7 +44,7 @@ const Channels = () => {
           +
         </button>
       </div>
-      {renderChannels()}
+      {renderChannels(channels, currentChannelId)}
     </div>
   );
 };

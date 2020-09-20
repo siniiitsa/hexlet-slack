@@ -3,10 +3,12 @@ import React from 'react';
 import Channels from './Channels';
 import Dialog from './Dialog';
 
-const App = (props) => {
+const App = ({ channels, currentChannelId }) => {
+  const channelsData = { channels, currentChannelId };
+
   return (
     <div className="row h-100 pb-3">
-      <Channels />
+      <Channels {...channelsData} />
       <Dialog />
     </div>
   );
