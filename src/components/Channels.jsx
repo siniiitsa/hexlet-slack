@@ -15,21 +15,14 @@ const renderChannels = (channels, currentChannelId) => {
 
     return (
       <li key={id} className="nav-item">
-        <button
-          type="button"
-          className={buttonClasses}
-        >
+        <button type="button" className={buttonClasses}>
           {name}
         </button>
       </li>
     );
   });
 
-  return (
-    <ul className="nav flex-column nav-pills nav-fill">
-      {items}
-    </ul>
-  );
+  return <ul className="nav flex-column nav-pills nav-fill">{items}</ul>;
 };
 
 const Channels = ({ channels, currentChannelId }) => {
@@ -37,10 +30,7 @@ const Channels = ({ channels, currentChannelId }) => {
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
         <span>Channels</span>
-        <button
-          type="button"
-          className="ml-auto p-0 btn btn-link"
-        >
+        <button type="button" className="ml-auto p-0 btn btn-link">
           +
         </button>
       </div>

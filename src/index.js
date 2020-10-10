@@ -22,10 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const mountNode = document.getElementById('chat');
 
-ReactDOM.render(
-  <App {...gon} />,
-  mountNode,
-);
+ReactDOM.render(<App {...gon} />, mountNode);
 
 console.log('it works!');
 console.log('gon', gon);
