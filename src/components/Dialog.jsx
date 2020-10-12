@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Dialog = () => {
+  const [message, setMessage] = useState('');
+
+  const updateMessage = (e) => {
+    const text = e.target.value.trim();
+    setMessage(text);
+  };
+
   return (
     <div className="col h-100">
       <div className="d-flex flex-column h-100">
@@ -12,6 +19,8 @@ const Dialog = () => {
             <div className="form-group">
               <div className="input-group">
                 <input
+                  onChange={updateMessage}
+                  value={message}
                   type="text"
                   name="body"
                   aria-label="body"
