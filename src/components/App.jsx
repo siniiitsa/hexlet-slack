@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Channels from './Channels';
-import Dialog from './Dialog';
+import Messages from './Messages';
 
 const App = ({ channels, currentChannelId }) => {
   const channelsData = { channels, currentChannelId };
@@ -9,7 +9,7 @@ const App = ({ channels, currentChannelId }) => {
   return (
     <div className="row h-100 pb-3">
       <Channels {...channelsData} />
-      <Dialog />
+      <Messages />
     </div>
   );
 };

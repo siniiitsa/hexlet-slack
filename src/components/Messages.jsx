@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Dialog = () => {
+const Messages = () => {
   const [message, setMessage] = useState('');
 
   const updateMessage = (e) => {
@@ -41,4 +41,4 @@ const Dialog = () => {
   );
 };
 
-export default Dialog;
+export default Messages;
