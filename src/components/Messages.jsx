@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Form, Field } from 'formik';
+
+const validateNewMessage = (value) => (value.trim() === '' ? 'Required' : null);
+
+const onSubmit = (values) => console.log(values);
 
 const Messages = () => {
-  const [message, setMessage] = useState('');
-
-  const updateMessage = (e) => {
-    const text = e.target.value.trim();
-    setMessage(text);
-  };
-
   return (
     <div className="col h-100">
       <div className="d-flex flex-column h-100">
@@ -15,26 +13,33 @@ const Messages = () => {
           id="messages-box"
           className="chat-messages overflow-auto mb-3"></div>
         <div className="mt-auto">
-          <form noValidate autoComplete="off">
-            <div className="form-group">
-              <div className="input-group">
-                <input
-                  onChange={updateMessage}
-                  value={message}
-                  type="text"
-                  name="body"
-                  aria-label="body"
-                  className="mr-2 form-control"
-                />
-                <button
-                  type="submit"
-                  aria-label="submit"
-                  className="btn btn-primary">
-                  Submit
-                </button>
-              </div>
-            </div>
-          </form>
+          <Formik
+            initialValues={{ message: '' }}
+            onSubmit={onSubmit}
+            validateOnMount>
+            {({ isValid }) => (
+              <Form noValidate autoComplete="off">
+                <div className="form-group">
+                  <div className="input-group">
+                    <Field
+                      type="text"
+                      name="message"
+                      aria-label="message"
+                      className="mr-2 form-control"
+                      validate={validateNewMessage}
+                    />
+                    <button
+                      type="submit"
+                      aria-label="submit"
+                      className="btn btn-primary"
+                      disabled={!isValid}>
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </div>
