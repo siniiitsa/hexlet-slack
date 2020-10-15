@@ -1,7 +1,10 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 
-const validateNewMessage = (value) => (value.trim() === '' ? 'Required' : null);
+const validateNewMessage = (value) => {
+  const error = value.trim() === '' ? 'Required' : null;
+  return error;
+};
 
 const onSubmit = (values) => console.log(values);
 
