@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
+import UserContext from '../contexts/userContext';
 
 const validateNewMessage = (value) => {
   const error = value.trim() === '' ? 'Required' : null;
@@ -9,6 +10,10 @@ const validateNewMessage = (value) => {
 const onSubmit = (values) => console.log(values);
 
 const Messages = () => {
+  const user = useContext(UserContext);
+
+  console.log('userName =>', user.name);
+
   return (
     <div className="col h-100">
       <div className="d-flex flex-column h-100">
