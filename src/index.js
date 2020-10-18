@@ -2,9 +2,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 import App from './components/App';
 import UserContext from './contexts/userContext';
+import buildStore from './store';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -21,6 +23,8 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
+const store = buildStore();
+
 let userName = cookies.get('userName');
 if (!userName) {
   userName = faker.name.findName();
@@ -29,7 +33,9 @@ if (!userName) {
 
 ReactDOM.render(
   <UserContext.Provider value={{ name: userName }}>
-    <App {...gon} />
+    <Provider store={store}>
+      <App {...gon} />
+    </Provider>
   </UserContext.Provider>,
   document.getElementById('chat')
 );

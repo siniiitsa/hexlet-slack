@@ -9,7 +9,7 @@ const App = ({ channels, currentChannelId }) => {
   return (
     <div className="row h-100 pb-3">
       <Channels {...channelsData} />
-      <Messages />
+      <Messages currentChannelId={currentChannelId} />
     </div>
   );
 };

@@ -1,18 +1,20 @@
 import React, { useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { useDispatch } from 'react-redux';
 import UserContext from '../contexts/userContext';
+import { addNewMessage } from '../store/messages';
 
 const validateNewMessage = (value) => {
   const error = value.trim() === '' ? 'Required' : null;
   return error;
 };
 
-const onSubmit = (values) => console.log(values);
-
-const Messages = () => {
+const Messages = ({ currentChannelId }) => {
   const user = useContext(UserContext);
+  const dispatch = useDispatch();
 
-  console.log('userName =>', user.name);
+  const handleSendMessage = ({ message }) =>
+    dispatch(addNewMessage(currentChannelId, { text: message }));
 
   return (
     <div className="col h-100">
@@ -23,7 +25,7 @@ const Messages = () => {
         <div className="mt-auto">
           <Formik
             initialValues={{ message: '' }}
-            onSubmit={onSubmit}
+            onSubmit={handleSendMessage}
             validateOnMount>
             {({ isValid }) => (
               <Form noValidate autoComplete="off">
