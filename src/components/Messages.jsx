@@ -9,9 +9,16 @@ const validateNewMessage = (value) => {
   return error;
 };
 
-const Messages = ({ currentChannelId }) => {
+const Messages = ({ currentChannelId, messages }) => {
   const user = useContext(UserContext);
   const dispatch = useDispatch();
+
+  const renderMessage = ({ text }) => (
+    <div>
+      <b>{`${user.name}:`}</b>
+      {text}
+    </div>
+  );
 
   const handleSendMessage = ({ message }) =>
     dispatch(addNewMessage(currentChannelId, { text: message }));
@@ -19,9 +26,9 @@ const Messages = ({ currentChannelId }) => {
   return (
     <div className="col h-100">
       <div className="d-flex flex-column h-100">
-        <div
-          id="messages-box"
-          className="chat-messages overflow-auto mb-3"></div>
+        <div id="messages-box" className="chat-messages overflow-auto mb-3">
+          {messages.map(renderMessage)}
+        </div>
         <div className="mt-auto">
           <Formik
             initialValues={{ message: '' }}
