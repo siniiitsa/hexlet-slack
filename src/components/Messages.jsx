@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Formik, Form, Field } from 'formik';
 import UserContext from '../contexts/UserContext';
-import {
-  sendNewMessage,
-  addMessage,
-  selectMessageByChannel,
-} from '../store/messages';
+import { sendNewMessage, selectMessageByChannel } from '../store/messages';
 
 const validateNewMessage = (value) => {
   const error = value.trim() === '' ? 'Required' : null;
@@ -20,9 +16,14 @@ const renderMessage = ({ text, id, userName }) => (
   </div>
 );
 
+const scrollToBottom = (ref) => {
+  ref.current.scrollTop = ref.current.scrollHeight;
+};
+
 const Messages = ({ currentChannelId, messages }) => {
   const user = useContext(UserContext);
   const newMessages = useSelector(selectMessageByChannel(currentChannelId));
+  const messagesBox = useRef(null);
   const dispatch = useDispatch();
 
   const handleSubmit = (values, onSubmitProps) => {
@@ -31,10 +32,17 @@ const Messages = ({ currentChannelId, messages }) => {
     onSubmitProps.resetForm();
   };
 
+  useEffect(() => {
+    scrollToBottom(messagesBox);
+  }, [newMessages]);
+
   return (
     <div className="col h-100">
       <div className="d-flex flex-column h-100">
-        <div id="messages-box" className="chat-messages overflow-auto mb-3">
+        <div
+          ref={messagesBox}
+          id="messages-box"
+          className="chat-messages overflow-auto mb-3">
           {messages.map(renderMessage)}
           {newMessages.map(renderMessage)}
         </div>
