@@ -25,9 +25,10 @@ const Messages = ({ currentChannelId, messages }) => {
   const newMessages = useSelector(selectMessageByChannel(currentChannelId));
   const dispatch = useDispatch();
 
-  const handleSendMessage = ({ message }) => {
-    const payload = { text: message, userName: user.name };
+  const handleSendMessage = (values, onSubmitProps) => {
+    const payload = { text: values.message, userName: user.name };
     dispatch(sendNewMessage(currentChannelId, payload));
+    onSubmitProps.resetForm();
   };
 
   return (
