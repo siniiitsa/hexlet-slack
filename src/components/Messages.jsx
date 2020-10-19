@@ -25,7 +25,7 @@ const Messages = ({ currentChannelId, messages }) => {
   const newMessages = useSelector(selectMessageByChannel(currentChannelId));
   const dispatch = useDispatch();
 
-  const handleSendMessage = (values, onSubmitProps) => {
+  const handleSubmit = (values, onSubmitProps) => {
     const payload = { text: values.message, userName: user.name };
     dispatch(sendNewMessage(currentChannelId, payload));
     onSubmitProps.resetForm();
@@ -41,7 +41,7 @@ const Messages = ({ currentChannelId, messages }) => {
         <div className="mt-auto">
           <Formik
             initialValues={{ message: '' }}
-            onSubmit={handleSendMessage}
+            onSubmit={handleSubmit}
             validateOnMount>
             {({ isValid }) => (
               <Form noValidate autoComplete="off">
