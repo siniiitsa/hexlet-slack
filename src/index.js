@@ -5,8 +5,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './components/App';
-import UserContext from './contexts/userContext';
+import UserContext from './contexts/UserContext';
 import buildStore from './store';
+import { addMessage } from './store/messages';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -17,13 +18,11 @@ import faker from 'faker';
 // @ts-ignore
 import gon from 'gon';
 import cookies from 'js-cookie';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
-
-const store = buildStore();
 
 let userName = cookies.get('userName');
 if (!userName) {
@@ -31,8 +30,18 @@ if (!userName) {
   cookies.set('userName', userName);
 }
 
+const socket = io();
+
+socket.on('newMessage', (socketMsg) => {
+  const message = socketMsg.data.attributes;
+  store.dispatch(addMessage({ message }));
+});
+
+const user = { name: userName };
+const store = buildStore();
+
 ReactDOM.render(
-  <UserContext.Provider value={{ name: userName }}>
+  <UserContext.Provider value={user}>
     <Provider store={store}>
       <App {...gon} />
     </Provider>

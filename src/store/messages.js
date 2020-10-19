@@ -10,40 +10,49 @@ const slice = createSlice({
     sending: false,
   },
   reducers: {
-    addNewMessageRequest(state) {
+    sendNewMessageRequest(state) {
       state.sending = true;
     },
-    addNewMessageSuccess(state, { payload: { message } }) {
+    sendNewMessageSuccess(state) {
       state.sending = false;
+    },
+    sendNewMessageFailure(state) {
+      state.sending = false;
+    },
+    addMessage(state, { payload: { message } }) {
       state.byId[message.id] = message;
       state.allIds.push(message.id);
-    },
-    addNewMessageFailure(state, action) {
-      state.sending = false;
     },
   },
 });
 
 const {
-  addNewMessageRequest,
-  addNewMessageSuccess,
-  addNewMessageFailure,
+  sendNewMessageRequest,
+  sendNewMessageSuccess,
+  sendNewMessageFailure,
 } = slice.actions;
+
+export const { addMessage } = slice.actions;
 
 export default slice.reducer;
 
 // Actions
-export const addNewMessage = (channelId, { text }) => async (dispatch) => {
-  dispatch(addNewMessageRequest());
+export const sendNewMessage = (channelId, payload) => async (dispatch) => {
+  dispatch(sendNewMessageRequest());
   const url = routes.channelMessagesPath(channelId);
-  const data = { data: { attributes: { text } } };
+  const data = { data: { attributes: payload } };
 
   try {
-    const response = await axios.post(url, data);
-    const message = response.data.data.attributes;
-    dispatch(addNewMessageSuccess({ message }));
+    await axios.post(url, data);
+    dispatch(sendNewMessageSuccess());
   } catch (error) {
     console.log(error);
-    dispatch(addNewMessageFailure());
+    dispatch(sendNewMessageFailure());
   }
+};
+
+// Selectors
+export const selectMessageByChannel = (channelId) => (state) => {
+  const { byId, allIds } = state.messages;
+  return allIds.map((id) => byId[id]).filter((m) => m.channelId === channelId);
 };

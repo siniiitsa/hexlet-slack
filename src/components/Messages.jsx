@@ -1,33 +1,41 @@
 import React, { useContext } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch } from 'react-redux';
-import UserContext from '../contexts/userContext';
-import { addNewMessage } from '../store/messages';
+import { useDispatch, useSelector } from 'react-redux';
+import UserContext from '../contexts/UserContext';
+import {
+  sendNewMessage,
+  addMessage,
+  selectMessageByChannel,
+} from '../store/messages';
 
 const validateNewMessage = (value) => {
   const error = value.trim() === '' ? 'Required' : null;
   return error;
 };
 
+const renderMessage = ({ text, id, userName }) => (
+  <div key={id}>
+    <b>{`${userName}: `}</b>
+    {text}
+  </div>
+);
+
 const Messages = ({ currentChannelId, messages }) => {
   const user = useContext(UserContext);
+  const newMessages = useSelector(selectMessageByChannel(currentChannelId));
   const dispatch = useDispatch();
 
-  const renderMessage = ({ text }) => (
-    <div>
-      <b>{`${user.name}:`}</b>
-      {text}
-    </div>
-  );
-
-  const handleSendMessage = ({ message }) =>
-    dispatch(addNewMessage(currentChannelId, { text: message }));
+  const handleSendMessage = ({ message }) => {
+    const payload = { text: message, userName: user.name };
+    dispatch(sendNewMessage(currentChannelId, payload));
+  };
 
   return (
     <div className="col h-100">
       <div className="d-flex flex-column h-100">
         <div id="messages-box" className="chat-messages overflow-auto mb-3">
           {messages.map(renderMessage)}
+          {newMessages.map(renderMessage)}
         </div>
         <div className="mt-auto">
           <Formik
