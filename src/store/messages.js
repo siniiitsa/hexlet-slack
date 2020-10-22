@@ -7,18 +7,8 @@ const slice = createSlice({
   initialState: {
     byId: {},
     allIds: [],
-    sending: false,
   },
   reducers: {
-    sendNewMessageRequest(state) {
-      state.sending = true;
-    },
-    sendNewMessageSuccess(state) {
-      state.sending = false;
-    },
-    sendNewMessageFailure(state) {
-      state.sending = false;
-    },
     addMessage(state, { payload: { message } }) {
       state.byId[message.id] = message;
       state.allIds.push(message.id);
@@ -26,28 +16,20 @@ const slice = createSlice({
   },
 });
 
-const {
-  sendNewMessageRequest,
-  sendNewMessageSuccess,
-  sendNewMessageFailure,
-} = slice.actions;
-
 export const { addMessage } = slice.actions;
 
 export default slice.reducer;
 
 // Actions
 export const sendNewMessage = (channelId, payload) => async (dispatch) => {
-  dispatch(sendNewMessageRequest());
   const url = routes.channelMessagesPath(channelId);
   const data = { data: { attributes: payload } };
 
   try {
     await axios.post(url, data);
-    dispatch(sendNewMessageSuccess());
   } catch (error) {
     console.log(error);
-    dispatch(sendNewMessageFailure());
+    throw error;
   }
 };
 

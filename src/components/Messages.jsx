@@ -1,6 +1,7 @@
-import React, { useContext, useRef, useEffect, useState } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
+import cn from 'classnames';
 import UserContext from '../contexts/UserContext';
 import { sendNewMessage, selectMessageByChannel } from '../store/messages';
 
@@ -17,19 +18,27 @@ const renderMessage = ({ text, id, userName }) => (
 );
 
 const scrollToBottom = (ref) => {
-  ref.current.scrollTop = ref.current.scrollHeight;
+  const { current } = ref;
+  current.scrollTop = current.scrollHeight;
 };
 
-const Messages = ({ currentChannelId, messages }) => {
+const Messages = ({ currentChannelId, messages: messagesOnPageLoad }) => {
   const user = useContext(UserContext);
+  const [submitError, setSubmitError] = useState(null);
   const newMessages = useSelector(selectMessageByChannel(currentChannelId));
   const messagesBox = useRef(null);
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, onSubmitProps) => {
+  const handleSubmit = async (values, formActions) => {
+    setSubmitError(null);
     const payload = { text: values.message, userName: user.name };
-    dispatch(sendNewMessage(currentChannelId, payload));
-    onSubmitProps.resetForm();
+
+    try {
+      await dispatch(sendNewMessage(currentChannelId, payload));
+      formActions.resetForm();
+    } catch (error) {
+      setSubmitError('Network Error');
+    }
   };
 
   useEffect(() => {
@@ -43,7 +52,7 @@ const Messages = ({ currentChannelId, messages }) => {
           ref={messagesBox}
           id="messages-box"
           className="chat-messages overflow-auto mb-3">
-          {messages.map(renderMessage)}
+          {messagesOnPageLoad.map(renderMessage)}
           {newMessages.map(renderMessage)}
         </div>
         <div className="mt-auto">
@@ -51,7 +60,7 @@ const Messages = ({ currentChannelId, messages }) => {
             initialValues={{ message: '' }}
             onSubmit={handleSubmit}
             validateOnMount>
-            {({ isValid }) => (
+            {({ isSubmitting, isValid }) => (
               <Form noValidate autoComplete="off">
                 <div className="form-group">
                   <div className="input-group">
@@ -59,16 +68,24 @@ const Messages = ({ currentChannelId, messages }) => {
                       type="text"
                       name="message"
                       aria-label="message"
-                      className="mr-2 form-control"
+                      className={cn({
+                        'mr-2 form-control': true,
+                        'is-invalid': !!submitError,
+                      })}
                       validate={validateNewMessage}
+                      disabled={isSubmitting}
                     />
                     <button
                       type="submit"
                       aria-label="submit"
                       className="btn btn-primary"
-                      disabled={!isValid}>
+                      disabled={!isValid || isSubmitting}>
                       Submit
                     </button>
+                    <div className="d-block invalid-feedback">
+                      {submitError && submitError}
+                      &nbsp;
+                    </div>
                   </div>
                 </div>
               </Form>
