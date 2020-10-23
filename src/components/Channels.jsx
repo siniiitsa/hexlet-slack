@@ -2,23 +2,20 @@ import React from 'react';
 import cn from 'classnames';
 import { Col, NavItem, Button } from 'react-bootstrap';
 
-const renderChannels = (channels, currentChannelId) => {
-  if (channels.length === 0) {
-    return null;
-  }
-
-  const items = channels.map(({ id, name }) => (
-    <NavItem key={id}>
-      <Button
-        className="nav-link btn-block mb-2 text-left"
-        variant={currentChannelId === id ? 'primary' : 'light'}>
-        {name}
-      </Button>
-    </NavItem>
-  ));
-
-  return <ul className="nav flex-column nav-pills nav-fill">{items}</ul>;
-};
+const renderChannels = (channels, currentChannelId) =>
+  channels.length > 0 ? (
+    <ul className="nav flex-column nav-pills nav-fill">
+      {channels.map(({ id, name }) => (
+        <NavItem key={id}>
+          <Button
+            className="nav-link btn-block mb-2 text-left"
+            variant={currentChannelId === id ? 'primary' : 'light'}>
+            {name}
+          </Button>
+        </NavItem>
+      ))}
+    </ul>
+  ) : null;
 
 const Channels = ({ channels, currentChannelId }) => {
   return (
