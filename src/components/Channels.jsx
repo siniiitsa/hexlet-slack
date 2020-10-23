@@ -1,41 +1,36 @@
 import React from 'react';
 import cn from 'classnames';
+import { Col, NavItem, Button } from 'react-bootstrap';
 
 const renderChannels = (channels, currentChannelId) => {
   if (channels.length === 0) {
     return null;
   }
 
-  const items = channels.map(({ id, name }) => {
-    const buttonClasses = cn({
-      'nav-link btn-block mb-2 text-left btn': true,
-      'btn-light': currentChannelId !== id,
-      'btn-primary': currentChannelId === id,
-    });
-
-    return (
-      <li key={id} className="nav-item">
-        <button type="button" className={buttonClasses}>
-          {name}
-        </button>
-      </li>
-    );
-  });
+  const items = channels.map(({ id, name }) => (
+    <NavItem key={id}>
+      <Button
+        className="nav-link btn-block mb-2 text-left"
+        variant={currentChannelId === id ? 'primary' : 'light'}>
+        {name}
+      </Button>
+    </NavItem>
+  ));
 
   return <ul className="nav flex-column nav-pills nav-fill">{items}</ul>;
 };
 
 const Channels = ({ channels, currentChannelId }) => {
   return (
-    <div className="col-3 border-right">
-      <div className="d-flex mb-2">
+    <Col xs="3" className="border-right">
+      <div className="d-flex my-2">
         <span>Channels</span>
-        <button type="button" className="ml-auto p-0 btn btn-link">
+        <Button className="ml-auto p-0" variant="link">
           +
-        </button>
+        </Button>
       </div>
       {renderChannels(channels, currentChannelId)}
-    </div>
+    </Col>
   );
 };
 

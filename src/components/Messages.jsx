@@ -2,6 +2,8 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import cn from 'classnames';
+import { Col, Button, FormGroup, InputGroup } from 'react-bootstrap';
+
 import UserContext from '../contexts/UserContext';
 import { sendNewMessage, selectMessageByChannel } from '../store/messages';
 
@@ -46,7 +48,7 @@ const Messages = ({ currentChannelId, messages: messagesOnPageLoad }) => {
   }, [newMessages]);
 
   return (
-    <div className="col h-100">
+    <Col className="h-100">
       <div className="d-flex flex-column h-100">
         <div
           ref={messagesBox}
@@ -62,8 +64,8 @@ const Messages = ({ currentChannelId, messages: messagesOnPageLoad }) => {
             validateOnMount>
             {({ isSubmitting, isValid }) => (
               <Form noValidate autoComplete="off">
-                <div className="form-group">
-                  <div className="input-group">
+                <FormGroup>
+                  <InputGroup>
                     <Field
                       type="text"
                       name="message"
@@ -75,25 +77,24 @@ const Messages = ({ currentChannelId, messages: messagesOnPageLoad }) => {
                       validate={validateNewMessage}
                       disabled={isSubmitting}
                     />
-                    <button
+                    <Button
                       type="submit"
-                      aria-label="submit"
-                      className="btn btn-primary"
+                      // aria-label="submit"
                       disabled={!isValid || isSubmitting}>
                       Submit
-                    </button>
+                    </Button>
                     <div className="d-block invalid-feedback">
                       {submitError && submitError}
                       &nbsp;
                     </div>
-                  </div>
-                </div>
+                  </InputGroup>
+                </FormGroup>
               </Form>
             )}
           </Formik>
         </div>
       </div>
-    </div>
+    </Col>
   );
 };
 
