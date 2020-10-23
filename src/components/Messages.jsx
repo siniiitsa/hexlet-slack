@@ -32,6 +32,7 @@ const Messages = ({ messages: messagesOnPageLoad }) => {
   );
   const newMessages = useSelector(selectMessageByChannel(currentChannelId));
   const messagesBox = useRef(null);
+  const newMessageField = useRef(null);
   const dispatch = useDispatch();
 
   const handleSubmit = async (values, formActions) => {
@@ -41,6 +42,7 @@ const Messages = ({ messages: messagesOnPageLoad }) => {
     try {
       await dispatch(sendNewMessage(currentChannelId, payload));
       formActions.resetForm();
+      newMessageField.current.focus();
     } catch (error) {
       setSubmitError('Network Error');
     }
@@ -74,6 +76,8 @@ const Messages = ({ messages: messagesOnPageLoad }) => {
                 <FormGroup>
                   <InputGroup>
                     <Field
+                      autoFocus
+                      innerRef={newMessageField}
                       type="text"
                       name="message"
                       aria-label="message"
