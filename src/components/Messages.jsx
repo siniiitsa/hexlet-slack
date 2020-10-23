@@ -79,7 +79,7 @@ const Messages = ({ currentChannelId, messages: messagesOnPageLoad }) => {
                     />
                     <Button
                       type="submit"
-                      // aria-label="submit"
+                      aria-label="submit"
                       disabled={!isValid || isSubmitting}>
                       Submit
                     </Button>
