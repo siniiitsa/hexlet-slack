@@ -24,9 +24,12 @@ const scrollToBottom = (ref) => {
   current.scrollTop = current.scrollHeight;
 };
 
-const Messages = ({ currentChannelId, messages: messagesOnPageLoad }) => {
+const Messages = ({ messages: messagesOnPageLoad }) => {
   const user = useContext(UserContext);
   const [submitError, setSubmitError] = useState(null);
+  const currentChannelId = useSelector(
+    (state) => state.channels.currentChannelId
+  );
   const newMessages = useSelector(selectMessageByChannel(currentChannelId));
   const messagesBox = useRef(null);
   const dispatch = useDispatch();
@@ -47,6 +50,10 @@ const Messages = ({ currentChannelId, messages: messagesOnPageLoad }) => {
     scrollToBottom(messagesBox);
   }, [newMessages]);
 
+  const messagesOnPageLoadForCurrentChannel = messagesOnPageLoad.filter(
+    ({ channelId }) => channelId === currentChannelId
+  );
+
   return (
     <Col className="h-100">
       <div className="d-flex flex-column h-100">
@@ -54,7 +61,7 @@ const Messages = ({ currentChannelId, messages: messagesOnPageLoad }) => {
           ref={messagesBox}
           id="messages-box"
           className="chat-messages overflow-auto mb-3">
-          {messagesOnPageLoad.map(renderMessage)}
+          {messagesOnPageLoadForCurrentChannel.map(renderMessage)}
           {newMessages.map(renderMessage)}
         </div>
         <div className="mt-auto">

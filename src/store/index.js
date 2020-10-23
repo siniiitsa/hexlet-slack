@@ -5,7 +5,7 @@ import messagesReducer from './messages';
 export default () =>
   configureStore({
     reducer: {
-      channles: channelsReducer,
+      channels: channelsReducer,
       messages: messagesReducer,
     },
   });

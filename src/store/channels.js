@@ -3,14 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'channels',
   initialState: {
-    byId: { 1: 'general' },
-    allIds: [1],
+    byId: {},
+    allIds: [],
+    currentChannelId: null,
   },
   reducers: {
-    addChannel(channels, action) {},
+    addChannel(state, action) {},
+    changeCurrentChannel(state, { payload: { channelId } }) {
+      state.currentChannelId = channelId;
+    },
   },
 });
 
-export const { addChannel } = slice.actions;
+export const { changeCurrentChannel } = slice.actions;
 
 export default slice.reducer;
