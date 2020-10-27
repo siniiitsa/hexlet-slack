@@ -1,57 +1,8 @@
-// @ts-check
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-import App from './components/App';
-import UserContext from './contexts/UserContext';
-import buildStore from './store';
-import { addMessage, addInitialMessages } from './store/messages';
-import { changeCurrentChannel } from './store/channels';
-
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
-import '../assets/application.scss';
-
-import faker from 'faker';
-// @ts-ignore
+import runApp from './init';
 import gon from 'gon';
-import cookies from 'js-cookie';
-import io from 'socket.io-client';
 
-if (process.env.NODE_ENV !== 'production') {
-  localStorage.debug = 'chat:*';
-}
-
-let userName = cookies.get('userName');
-if (!userName) {
-  userName = faker.name.findName();
-  cookies.set('userName', userName);
-}
-
-const user = { name: userName };
-const store = buildStore();
-
-store.dispatch(changeCurrentChannel({ channelId: gon.currentChannelId }));
-store.dispatch(addInitialMessages({ messages: gon.messages }));
-
-const socket = io();
-
-socket.on('newMessage', (socketMsg) => {
-  const message = socketMsg.data.attributes;
-  store.dispatch(addMessage({ message }));
-});
-
-ReactDOM.render(
-  <UserContext.Provider value={user}>
-    <Provider store={store}>
-      <App {...gon} />
-    </Provider>
-  </UserContext.Provider>,
-  document.getElementById('chat')
-);
+const initialData = { ...gon };
+runApp(initialData);
 
 console.log('it works!');
 console.log('gon', gon);

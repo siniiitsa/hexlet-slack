@@ -4,14 +4,11 @@ import { Row } from 'react-bootstrap';
 import Channels from './Channels';
 import Messages from './Messages';
 
-const App = ({ channels, messages, currentChannelId }) => {
-  const channelsProps = { channels, currentChannelId };
-  const messagesProps = { messages, currentChannelId };
-
+const App = () => {
   return (
     <Row className="h-100 pb-3">
-      <Channels {...channelsProps} />
-      <Messages {...messagesProps} />
+      <Channels />
+      <Messages />
     </Row>
   );
 };

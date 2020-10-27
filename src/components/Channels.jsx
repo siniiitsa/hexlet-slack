@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, NavItem, Button } from 'react-bootstrap';
 
-import { changeCurrentChannel } from '../store/channels';
+import { changeCurrentChannel, selectAllChannles } from '../store/channels';
 
-const Channels = ({ channels }) => {
+const Channels = () => {
   const dispatch = useDispatch();
+  const channels = useSelector(selectAllChannles);
   const currentChannelId = useSelector(
     (state) => state.channels.currentChannelId
   );

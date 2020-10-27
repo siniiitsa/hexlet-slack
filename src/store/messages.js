@@ -13,19 +13,19 @@ const slice = createSlice({
       state.byId[message.id] = message;
       state.allIds.push(message.id);
     },
-    addInitialMessages(state, { payload: { messages } }) {
+    initMessages(state, { payload: { messages } }) {
       state.byId = messages.reduce((acc, m) => ({ ...acc, [m.id]: m }), {});
       state.allIds = messages.map((m) => m.id);
     },
   },
 });
 
-export const { addMessage, addInitialMessages } = slice.actions;
+export const { addMessage, initMessages } = slice.actions;
 
 export default slice.reducer;
 
 // Actions
-export const sendNewMessage = (channelId, payload) => async (dispatch) => {
+export const sendNewMessage = (channelId, payload) => async () => {
   const url = routes.channelMessagesPath(channelId);
   const data = { data: { attributes: payload } };
 
