@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import UserContext from './contexts/UserContext';
 import buildStore from './store';
-import { addMessage } from './store/messages';
+import { addMessage, addInitialMessages } from './store/messages';
 import { changeCurrentChannel } from './store/channels';
 
 import 'core-js/stable';
@@ -35,6 +35,7 @@ const user = { name: userName };
 const store = buildStore();
 
 store.dispatch(changeCurrentChannel({ channelId: gon.currentChannelId }));
+store.dispatch(addInitialMessages({ messages: gon.messages }));
 
 const socket = io();
 

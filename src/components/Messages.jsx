@@ -24,13 +24,13 @@ const scrollToBottom = (ref) => {
   current.scrollTop = current.scrollHeight;
 };
 
-const Messages = ({ messages: messagesOnPageLoad }) => {
+const Messages = () => {
   const user = useContext(UserContext);
   const [submitError, setSubmitError] = useState(null);
   const currentChannelId = useSelector(
     (state) => state.channels.currentChannelId
   );
-  const newMessages = useSelector(selectMessageByChannel(currentChannelId));
+  const messages = useSelector(selectMessageByChannel(currentChannelId));
   const messagesBox = useRef(null);
   const newMessageField = useRef(null);
   const dispatch = useDispatch();
@@ -50,11 +50,7 @@ const Messages = ({ messages: messagesOnPageLoad }) => {
 
   useEffect(() => {
     scrollToBottom(messagesBox);
-  }, [newMessages]);
-
-  const messagesOnPageLoadForCurrentChannel = messagesOnPageLoad.filter(
-    ({ channelId }) => channelId === currentChannelId
-  );
+  }, [messages]);
 
   return (
     <Col className="h-100">
@@ -63,8 +59,7 @@ const Messages = ({ messages: messagesOnPageLoad }) => {
           ref={messagesBox}
           id="messages-box"
           className="chat-messages overflow-auto mb-3">
-          {messagesOnPageLoadForCurrentChannel.map(renderMessage)}
-          {newMessages.map(renderMessage)}
+          {messages.map(renderMessage)}
         </div>
         <div className="mt-auto">
           <Formik

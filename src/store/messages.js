@@ -13,10 +13,14 @@ const slice = createSlice({
       state.byId[message.id] = message;
       state.allIds.push(message.id);
     },
+    addInitialMessages(state, { payload: { messages } }) {
+      state.byId = messages.reduce((acc, m) => ({ ...acc, [m.id]: m }), {});
+      state.allIds = messages.map((m) => m.id);
+    },
   },
 });
 
-export const { addMessage } = slice.actions;
+export const { addMessage, addInitialMessages } = slice.actions;
 
 export default slice.reducer;
 
