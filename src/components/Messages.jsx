@@ -3,14 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import cn from 'classnames';
 import { Col, Button, FormGroup, InputGroup } from 'react-bootstrap';
-
+import getValidator from '../validate';
 import UserContext from '../contexts/UserContext';
 import { sendNewMessage, selectMessageByChannel } from '../store/messages';
-
-const validateNewMessage = (value) => {
-  const error = value.trim() === '' ? 'Required' : null;
-  return error;
-};
 
 const renderMessage = ({ text, id, userName }) => (
   <div key={id}>
@@ -80,7 +75,7 @@ const Messages = () => {
                         'mr-2 form-control': true,
                         'is-invalid': !!submitError,
                       })}
-                      validate={validateNewMessage}
+                      validate={getValidator('chatMessage')}
                       disabled={isSubmitting}
                     />
                     <Button

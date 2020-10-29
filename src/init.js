@@ -8,7 +8,7 @@ import App from './components/App';
 import UserContext from './contexts/UserContext';
 import buildStore from './store';
 import { addMessage, initMessages } from './store/messages';
-import { initChannels } from './store/channels';
+import { initChannels, addChannel } from './store/channels';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -32,16 +32,22 @@ export default ({ messages, channels, currentChannelId }) => {
 
   const user = { name: userName };
   const store = buildStore();
+  const { dispatch } = store;
 
-  store.dispatch(initMessages({ messages }));
-  store.dispatch(initChannels({ currentChannelId, channels }));
+  dispatch(initMessages({ messages }));
+  dispatch(initChannels({ currentChannelId, channels }));
 
   const socket = io();
 
-  socket.on('newMessage', (socketMsg) => {
-    const message = socketMsg.data.attributes;
-    store.dispatch(addMessage({ message }));
-  });
+  socket
+    .on('newMessage', (socketMsg) => {
+      const message = socketMsg.data.attributes;
+      dispatch(addMessage({ message }));
+    })
+    .on('newChannel', (socketMsg) => {
+      const channel = socketMsg.data.attributes;
+      dispatch(addChannel({ channel }));
+    });
 
   ReactDOM.render(
     <UserContext.Provider value={user}>

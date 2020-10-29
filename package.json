@@ -71,7 +71,8 @@
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@types/jest": "^26.0.4",
