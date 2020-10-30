@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, NavItem, Button, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Col, NavItem, Button } from 'react-bootstrap';
 import getModal from './modals';
 import ChannelButton from './ChannelButton';
 import { changeCurrentChannel, selectAllChannles } from '../store/channels';
