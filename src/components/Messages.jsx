@@ -82,7 +82,7 @@ const Messages = () => {
                       type="submit"
                       aria-label="submit"
                       disabled={!isValid || isSubmitting}>
-                      Submit
+                      Send
                     </Button>
                     <div className="d-block invalid-feedback">
                       {submitError && submitError}
