@@ -14,8 +14,8 @@ const renderButtonWithMenu = ({
   name,
   variant,
   onClick,
-  onChannelRename,
-  onChannelRemove,
+  onRemoveChannel,
+  onRenameChannel,
 }) => (
   <Dropdown as={ButtonGroup} className="btn-block mb-2">
     <Button
@@ -33,8 +33,8 @@ const renderButtonWithMenu = ({
     />
 
     <Dropdown.Menu>
-      <Dropdown.Item onClick={onChannelRename}>Rename</Dropdown.Item>
-      <Dropdown.Item onClick={onChannelRemove}>Remove</Dropdown.Item>
+      <Dropdown.Item onClick={onRenameChannel}>Rename</Dropdown.Item>
+      <Dropdown.Item onClick={onRemoveChannel}>Remove</Dropdown.Item>
     </Dropdown.Menu>
   </Dropdown>
 );

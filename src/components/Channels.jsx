@@ -21,6 +21,7 @@ const Channels = () => {
   );
 
   const hideModal = () => setModalInfo({ type: null, item: null });
+
   const createShowModalHandler = (type, item = null) => () =>
     setModalInfo({ type, item });
 
@@ -46,8 +47,8 @@ const Channels = () => {
               removable={removable}
               variant={id === currentChannelId ? 'primary' : 'light'}
               onClick={createChangeChannelHandler(id)}
-              onChannelRename={createShowModalHandler('addChannel')} // TODO: change modal type
-              onChannelRemove={createShowModalHandler('addChannel')} // TODO: change modal type
+              onRenameChannel={createShowModalHandler('addChannel')} // TODO: change modal type
+              onRemoveChannel={createShowModalHandler('addChannel')} // TODO: change modal type
             />
           </NavItem>
         ))}
