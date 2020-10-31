@@ -25,7 +25,7 @@ export const { addMessage, initMessages } = slice.actions;
 export default slice.reducer;
 
 // Actions
-export const sendNewMessage = (channelId, payload) => async () => {
+export const requestAddMessage = (channelId, payload) => async () => {
   const url = routes.channelMessagesPath(channelId);
   const data = { data: { attributes: payload } };
 

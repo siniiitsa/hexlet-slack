@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { Col, Button, FormGroup, InputGroup } from 'react-bootstrap';
 import getValidator from '../validate';
 import UserContext from '../contexts/UserContext';
-import { sendNewMessage, selectMessageByChannel } from '../store/messages';
+import { requestAddMessage, selectMessageByChannel } from '../store/messages';
 
 const renderMessage = ({ text, id, userName }) => (
   <div key={id}>
@@ -35,7 +35,7 @@ const Messages = () => {
     const payload = { text: values.message, userName: user.name };
 
     try {
-      await dispatch(sendNewMessage(currentChannelId, payload));
+      await dispatch(requestAddMessage(currentChannelId, payload));
       formActions.resetForm();
       newMessageField.current.focus();
     } catch (error) {
