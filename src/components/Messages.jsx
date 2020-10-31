@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import cn from 'classnames';
 import { Col, Button, FormGroup, InputGroup } from 'react-bootstrap';
 import getValidator from '../validate';
-import UserContext from '../contexts/UserContext';
+import userContext from '../contexts/userContext';
 import { requestAddMessage, selectMessageByChannel } from '../store/messages';
 
 const renderMessage = ({ text, id, userName }) => (
@@ -20,7 +20,7 @@ const scrollToBottom = (ref) => {
 };
 
 const Messages = () => {
-  const user = useContext(UserContext);
+  const user = useContext(userContext);
   const [submitError, setSubmitError] = useState(null);
   const currentChannelId = useSelector(
     (state) => state.channels.currentChannelId

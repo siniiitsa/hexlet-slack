@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './components/App';
-import UserContext from './contexts/UserContext';
+import userContext from './contexts/userContext';
 import buildStore from './store';
 import { addMessage, initMessages } from './store/messages';
 import {
@@ -63,11 +63,11 @@ export default ({ messages, channels, currentChannelId }) => {
     });
 
   ReactDOM.render(
-    <UserContext.Provider value={user}>
+    <userContext.Provider value={user}>
       <Provider store={store}>
         <App />
       </Provider>
-    </UserContext.Provider>,
+    </userContext.Provider>,
     document.getElementById('chat')
   );
 };
