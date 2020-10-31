@@ -4,7 +4,7 @@ const validateChannelName = (name) => {
   }
 
   const value = name.trim();
-  if (!/\w/.test(value)) {
+  if (!/[\p{L}\d]/u.test(value)) {
     return 'Must have letters or numbers';
   }
   if (value.length < 3 || value.length > 20) {
