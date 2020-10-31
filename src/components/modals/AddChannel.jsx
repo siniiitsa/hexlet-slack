@@ -1,20 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
 import cn from 'classnames';
-import { Formik, Form, Field, ErrorMessage, yupToFormErrors } from 'formik';
-import { createNewChannel } from '../../store/channels';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { requestAddChannel } from '../../store/channels';
 import FieldError from './FieldError';
 import getValidator from '../../validate';
 
 const AddChannel = ({ onHide }) => {
   const dispatch = useDispatch();
-  // const [submitError, setSubmitError] = useState(null);
   const nameField = useRef(null);
 
   const handleSubmit = async (values, formActions) => {
     try {
-      await dispatch(createNewChannel({ name: values.name }));
+      await dispatch(requestAddChannel({ name: values.name }));
       onHide();
     } catch (error) {
       formActions.setFieldError('name', 'Network Error');

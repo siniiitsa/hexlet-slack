@@ -23,15 +23,24 @@ const slice = createSlice({
       state.byId[id] = channel;
       state.allIds.push(id);
     },
+    renameChannel(state, { payload: { channel } }) {
+      const { id, name } = channel;
+      state.byId[id].name = name;
+    },
   },
 });
 
-export const { changeCurrentChannel, initChannels, addChannel } = slice.actions;
+export const {
+  changeCurrentChannel,
+  initChannels,
+  addChannel,
+  renameChannel,
+} = slice.actions;
 
 export default slice.reducer;
 
 // Actions
-export const createNewChannel = (payload) => async () => {
+export const requestAddChannel = (payload) => async () => {
   const url = routes.channelsPath();
   const data = { data: { attributes: payload } };
 
