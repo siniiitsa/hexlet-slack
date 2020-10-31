@@ -48,7 +48,7 @@ const Channels = () => {
               variant={id === currentChannelId ? 'primary' : 'light'}
               onClick={createChangeChannelHandler(id)}
               onRenameChannel={createShowModalHandler('renameChannel', id)}
-              onRemoveChannel={createShowModalHandler('addChannel')} // TODO: change modal type
+              onRemoveChannel={createShowModalHandler('removeChannel', id)}
             />
           </NavItem>
         ))}

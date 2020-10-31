@@ -1,6 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../routes';
+import { removeChannel } from './channels';
 
 const slice = createSlice({
   name: 'messages',
@@ -16,6 +17,17 @@ const slice = createSlice({
     initMessages(state, { payload: { messages } }) {
       state.byId = messages.reduce((acc, m) => ({ ...acc, [m.id]: m }), {});
       state.allIds = messages.map((m) => m.id);
+    },
+  },
+  extraReducers: {
+    [removeChannel](state, { payload: { id: channelId } }) {
+      const { byId, allIds } = state;
+      const idsToStay = allIds.filter((id) => byId[id].channelId !== channelId);
+      state.allIds = idsToStay;
+      state.byId = idsToStay.reduce(
+        (acc, id) => ({ ...acc, [id]: byId[id] }),
+        {}
+      );
     },
   },
 });

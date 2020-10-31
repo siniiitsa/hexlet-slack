@@ -27,6 +27,10 @@ const slice = createSlice({
       const { id, name } = channel;
       state.byId[id].name = name;
     },
+    removeChannel(state, { payload: { id } }) {
+      delete state.byId[id];
+      state.allIds = state.allIds.filter((channelId) => channelId !== id);
+    },
   },
 });
 
@@ -35,12 +39,13 @@ export const {
   initChannels,
   addChannel,
   renameChannel,
+  removeChannel,
 } = slice.actions;
 
 export default slice.reducer;
 
 // Actions
-export const requestAddChannel = (payload) => async () => {
+export const requestAddChannel = (payload) => async (dis, s) => {
   const url = routes.channelsPath();
   const data = { data: { attributes: payload } };
 
@@ -62,6 +67,19 @@ export const requestRenameChannel = (payload) => async () => {
 
   try {
     await axios.patch(url, data);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const requestRemoveChannel = (payload) => async () => {
+  const { id } = payload;
+  const url = routes.channelPath(id);
+  const data = { params: { id } };
+
+  try {
+    await axios.delete(url, data);
   } catch (error) {
     console.log(error);
     throw error;

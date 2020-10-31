@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
 import cn from 'classnames';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { requestAddChannel, requestRenameChannel } from '../../store/channels';
+import { requestRenameChannel } from '../../store/channels';
 import FieldError from './FieldError';
 import getValidator from '../../validate';
 
