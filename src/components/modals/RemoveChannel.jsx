@@ -8,13 +8,10 @@ const RemoveChannel = ({ onHide, info }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    setSubmitError(null);
     try {
       await dispatch(requestRemoveChannel({ id: info.itemId }));
       onHide();
-    } catch (error) {
-      setSubmitError('Network Error');
-    }
+    } catch {}
   };
 
   return (
