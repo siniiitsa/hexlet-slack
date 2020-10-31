@@ -52,6 +52,22 @@ export const requestAddChannel = (payload) => async () => {
   }
 };
 
+export const requestRenameChannel = (payload) => async () => {
+  const { id, name } = payload;
+  const url = routes.channelPath(id);
+  const data = {
+    data: { attributes: { name } },
+    params: { id },
+  };
+
+  try {
+    await axios.patch(url, data);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 // Selectors
 export const selectAllChannles = (state) => {
   const { byId, allIds } = state.channels;

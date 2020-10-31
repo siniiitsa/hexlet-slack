@@ -8,7 +8,7 @@ import App from './components/App';
 import UserContext from './contexts/UserContext';
 import buildStore from './store';
 import { addMessage, initMessages } from './store/messages';
-import { initChannels, addChannel } from './store/channels';
+import { initChannels, addChannel, renameChannel } from './store/channels';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -47,6 +47,10 @@ export default ({ messages, channels, currentChannelId }) => {
     .on('newChannel', (socketMsg) => {
       const channel = socketMsg.data.attributes;
       dispatch(addChannel({ channel }));
+    })
+    .on('renameChannel', (socketMsg) => {
+      const channel = socketMsg.data.attributes;
+      dispatch(renameChannel({ channel }));
     });
 
   ReactDOM.render(
