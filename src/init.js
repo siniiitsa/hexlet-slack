@@ -28,6 +28,7 @@ import {
 export default ({ messages, channels, currentChannelId }) => {
   if (process.env.NODE_ENV !== 'production') {
     localStorage.debug = 'chat:*';
+  } else {
     initProdErrorsTracking();
   }
 
