@@ -28,6 +28,7 @@ const slice = createSlice({
       state.byId[id].name = name;
     },
     removeChannel(state, { payload: { id } }) {
+      state.currentChannelId = null;
       delete state.byId[id];
       state.allIds = state.allIds.filter((channelId) => channelId !== id);
     },

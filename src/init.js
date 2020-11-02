@@ -3,6 +3,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import Rollbar from 'rollbar';
+
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
+import '../assets/application.scss';
+
+import faker from 'faker';
+import cookies from 'js-cookie';
+import io from 'socket.io-client';
 
 import App from './components/App';
 import userContext from './contexts/userContext';
@@ -15,19 +25,19 @@ import {
   removeChannel,
 } from './store/channels';
 
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
-import '../assets/application.scss';
-
-import faker from 'faker';
-import cookies from 'js-cookie';
-import io from 'socket.io-client';
-
 export default ({ messages, channels, currentChannelId }) => {
   if (process.env.NODE_ENV !== 'production') {
     localStorage.debug = 'chat:*';
   }
+
+  const rollbar = new Rollbar({
+    accessToken: '72fab1ca365f4dcb9560526987345ab8',
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+  });
+
+  // record a generic message and send it to Rollbar
+  rollbar.log('Hello world!');
 
   let userName = cookies.get('userName');
   if (!userName) {
