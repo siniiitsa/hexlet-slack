@@ -3,7 +3,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import Rollbar from 'rollbar';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -18,6 +17,7 @@ import App from './components/App';
 import userContext from './contexts/userContext';
 import buildStore from './store';
 import { addMessage, initMessages } from './store/messages';
+import initProdErrorsTracking from './production-errors';
 import {
   initChannels,
   addChannel,
@@ -28,16 +28,8 @@ import {
 export default ({ messages, channels, currentChannelId }) => {
   if (process.env.NODE_ENV !== 'production') {
     localStorage.debug = 'chat:*';
+    initProdErrorsTracking();
   }
-
-  const rollbar = new Rollbar({
-    accessToken: '72fab1ca365f4dcb9560526987345ab8',
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-  });
-
-  // record a generic message and send it to Rollbar
-  rollbar.log('Hello world!');
 
   let userName = cookies.get('userName');
   if (!userName) {
