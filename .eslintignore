@@ -1,0 +1,7 @@
+# Ignore everything in the root
+/*
+
+# Except for
+!/src/
+
+/src/production-error.js

@@ -1,4 +1,5 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
+/* eslint-disable no-param-reassign */
+import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../routes';
 import { removeChannel } from './channels';
@@ -26,7 +27,7 @@ const slice = createSlice({
       state.allIds = idsToStay;
       state.byId = idsToStay.reduce(
         (acc, id) => ({ ...acc, [id]: byId[id] }),
-        {}
+        {},
       );
     },
   },
@@ -44,6 +45,7 @@ export const requestAddMessage = (channelId, payload) => async () => {
   try {
     await axios.post(url, data);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
     throw error;
   }

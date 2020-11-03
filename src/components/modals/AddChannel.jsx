@@ -1,8 +1,11 @@
 import React, { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
 import cn from 'classnames';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {
+  Formik, Form, Field, ErrorMessage,
+} from 'formik';
 import { requestAddChannel } from '../../store/channels';
 import FieldError from './FieldError';
 import getValidator from '../../validate';
@@ -55,7 +58,8 @@ const AddChannel = ({ onHide }) => {
               <Button
                 onClick={onHide}
                 variant="secondary"
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 Cancel
               </Button>
             </Form>
@@ -64,6 +68,10 @@ const AddChannel = ({ onHide }) => {
       </Modal.Body>
     </Modal>
   );
+};
+
+AddChannel.propTypes = {
+  onHide: PropTypes.func.isRequired,
 };
 
 export default AddChannel;

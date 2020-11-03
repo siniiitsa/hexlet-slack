@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
@@ -11,6 +12,7 @@ const RemoveChannel = ({ onHide, info }) => {
     try {
       await dispatch(requestRemoveChannel({ id: info.itemId }));
       onHide();
+    // eslint-disable-next-line no-empty
     } catch {}
   };
 
@@ -32,13 +34,15 @@ const RemoveChannel = ({ onHide, info }) => {
                 type="submit"
                 variant="danger"
                 className="mr-2"
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 Remove
               </Button>
               <Button
                 onClick={onHide}
                 variant="secondary"
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 Cancel
               </Button>
             </Form>
@@ -47,6 +51,13 @@ const RemoveChannel = ({ onHide, info }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+RemoveChannel.propTypes = {
+  onHide: PropTypes.func.isRequired,
+  info: PropTypes.shape({
+    itemId: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default RemoveChannel;

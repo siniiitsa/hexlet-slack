@@ -14,8 +14,7 @@ const validateChannelName = (name) => {
   return null;
 };
 
-const validateChatMessage = (message) =>
-  message.trim() === '' ? 'Required' : null;
+const validateChatMessage = (message) => (message.trim() === '' ? 'Required' : null);
 
 const validators = {
   channelName: validateChannelName,

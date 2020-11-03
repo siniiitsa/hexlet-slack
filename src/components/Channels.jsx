@@ -17,16 +17,16 @@ const Channels = () => {
   const [modalInfo, setModalInfo] = useState({ type: null, itemId: null });
   const channels = useSelector(selectAllChannles);
   const currentChannelId = useSelector(
-    (state) => state.channels.currentChannelId
+    (state) => state.channels.currentChannelId,
   );
 
   const hideModal = () => setModalInfo({ type: null, itemId: null });
 
-  const createShowModalHandler = (type, itemId = null) => () =>
-    setModalInfo({ type, itemId });
+  const createShowModalHandler = (type, itemId = null) => () => setModalInfo({ type, itemId });
 
-  const createChangeChannelHandler = (channelId) => () =>
-    dispatch(changeCurrentChannel({ channelId }));
+  const createChangeChannelHandler = (channelId) => () => (
+    dispatch(changeCurrentChannel({ channelId }))
+  );
 
   return (
     <Col xs="3" className="border-right">
@@ -35,7 +35,8 @@ const Channels = () => {
         <Button
           className="ml-auto p-0"
           onClick={createShowModalHandler('addChannel')}
-          variant="link">
+          variant="link"
+        >
           +
         </Button>
       </div>

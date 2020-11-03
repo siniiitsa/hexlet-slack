@@ -1,8 +1,12 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, {
+  useState, useContext, useRef, useEffect,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import cn from 'classnames';
-import { Col, Button, FormGroup, InputGroup } from 'react-bootstrap';
+import {
+  Col, Button, FormGroup, InputGroup,
+} from 'react-bootstrap';
 import getValidator from '../validate';
 import userContext from '../contexts/userContext';
 import { requestAddMessage, selectMessageByChannel } from '../store/messages';
@@ -23,7 +27,7 @@ const Messages = () => {
   const user = useContext(userContext);
   const [submitError, setSubmitError] = useState(null);
   const currentChannelId = useSelector(
-    (state) => state.channels.currentChannelId
+    (state) => state.channels.currentChannelId,
   );
   const messages = useSelector(selectMessageByChannel(currentChannelId));
   const messagesBox = useRef(null);
@@ -58,14 +62,16 @@ const Messages = () => {
         <div
           ref={messagesBox}
           id="messages-box"
-          className="chat-messages overflow-auto mb-3">
+          className="chat-messages overflow-auto mb-3"
+        >
           {messages.map(renderMessage)}
         </div>
         <div className="mt-auto">
           <Formik
             initialValues={{ message: '' }}
             onSubmit={handleSubmit}
-            validateOnMount>
+            validateOnMount
+          >
             {({ isSubmitting, isValid }) => (
               <Form noValidate autoComplete="off">
                 <FormGroup>
@@ -86,7 +92,8 @@ const Messages = () => {
                     <Button
                       type="submit"
                       aria-label="submit"
-                      disabled={!isValid || isSubmitting}>
+                      disabled={!isValid || isSubmitting}
+                    >
                       Send
                     </Button>
                     <div className="d-block invalid-feedback">

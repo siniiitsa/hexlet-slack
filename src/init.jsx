@@ -71,6 +71,6 @@ export default ({ messages, channels, currentChannelId }) => {
         <App />
       </Provider>
     </userContext.Provider>,
-    document.getElementById('chat')
+    document.getElementById('chat'),
   );
 };

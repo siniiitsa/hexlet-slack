@@ -5,7 +5,8 @@ const renderButton = ({ name, variant, onClick }) => (
   <Button
     onClick={onClick}
     className="btn-block mb-2 text-left shadow-none"
-    variant={variant}>
+    variant={variant}
+  >
     {name}
   </Button>
 );
@@ -21,7 +22,8 @@ const renderButtonWithMenu = ({
     <Button
       onClick={onClick}
       className="text-left shadow-none"
-      variant={variant}>
+      variant={variant}
+    >
       {name}
     </Button>
 

@@ -1,8 +1,11 @@
 import React, { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
 import cn from 'classnames';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {
+  Formik, Form, Field, ErrorMessage,
+} from 'formik';
 import { requestRenameChannel } from '../../store/channels';
 import FieldError from './FieldError';
 import getValidator from '../../validate';
@@ -56,7 +59,8 @@ const RenameChannel = ({ onHide, info }) => {
               <Button
                 onClick={onHide}
                 variant="secondary"
-                disabled={isSubmitting}>
+                disabled={isSubmitting}
+              >
                 Cancel
               </Button>
             </Form>
@@ -65,6 +69,13 @@ const RenameChannel = ({ onHide, info }) => {
       </Modal.Body>
     </Modal>
   );
+};
+
+RenameChannel.propTypes = {
+  onHide: PropTypes.func.isRequired,
+  info: PropTypes.shape({
+    itemId: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default RenameChannel;
