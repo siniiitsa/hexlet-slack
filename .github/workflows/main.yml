@@ -23,8 +23,14 @@ jobs:
         run: |
           make install
           make build
-        env:
-          CI: true
-
+      - name: run tests
+        run: make test
       - name: Run linter
         run: make lint
+
+        env:
+          CI: true
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: make test-coverage
+          debug: true
