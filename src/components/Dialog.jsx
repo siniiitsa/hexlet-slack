@@ -23,7 +23,7 @@ const scrollToBottom = (ref) => {
   current.scrollTop = current.scrollHeight;
 };
 
-const Messages = () => {
+const Dialog = () => {
   const user = useContext(userContext);
   const [submitError, setSubmitError] = useState(null);
   const currentChannelId = useSelector(
@@ -111,4 +111,4 @@ const Messages = () => {
   );
 };
 
-export default Messages;
+export default Dialog;
