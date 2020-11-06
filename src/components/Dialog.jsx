@@ -35,11 +35,6 @@ const Dialog = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (values, formActions) => {
-    if (currentChannelId === null) {
-      setSubmitError('No channel selected');
-      return;
-    }
-
     setSubmitError(null);
     const payload = { text: values.message, userName: user.name };
 

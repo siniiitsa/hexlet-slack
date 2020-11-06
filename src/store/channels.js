@@ -25,6 +25,10 @@ const slice = createSlice({
       state.channels.find((c) => c.id === id).name = name;
     },
     removeChannel(state, { payload: { id } }) {
+      if (id === state.currentChannelId) {
+        const prevChannelIndex = state.channels.findIndex((c) => c.id === id) - 1;
+        state.currentChannelId = state.channels[prevChannelIndex].id;
+      }
       state.channels = state.channels.filter((c) => c.id !== id);
     },
   },
