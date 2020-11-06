@@ -2,5 +2,4 @@
 import gon from 'gon';
 import runApp from './init';
 
-const initialData = { ...gon };
-runApp(initialData);
+runApp(gon);
