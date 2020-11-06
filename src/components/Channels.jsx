@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Col, NavItem, Button } from 'react-bootstrap';
 import getModal from './modals';
 import ChannelButton from './ChannelButton';
-import { changeCurrentChannel, selectAllChannles } from '../store/channels';
+import { changeCurrentChannel } from '../store/channels';
 
 const renderModal = (modalInfo, hideModal) => {
   if (!modalInfo.type) return null;
@@ -15,7 +15,7 @@ const renderModal = (modalInfo, hideModal) => {
 const Channels = () => {
   const dispatch = useDispatch();
   const [modalInfo, setModalInfo] = useState({ type: null, itemId: null });
-  const channels = useSelector(selectAllChannles);
+  const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector(
     (state) => state.channels.currentChannelId,
   );

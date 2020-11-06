@@ -6,32 +6,26 @@ import routes from '../routes';
 const slice = createSlice({
   name: 'channels',
   initialState: {
-    byId: {},
-    allIds: [],
+    channels: [],
     currentChannelId: null,
   },
   reducers: {
     initChannels(state, { payload: { currentChannelId, channels } }) {
       state.currentChannelId = currentChannelId;
-      state.byId = channels.reduce((acc, c) => ({ ...acc, [c.id]: c }), {});
-      state.allIds = channels.map((c) => c.id);
+      state.channels.push(...channels);
     },
     changeCurrentChannel(state, { payload: { channelId } }) {
       state.currentChannelId = channelId;
     },
     addChannel(state, { payload: { channel } }) {
-      const { id } = channel;
-      state.byId[id] = channel;
-      state.allIds.push(id);
+      state.channels.push(channel);
     },
     renameChannel(state, { payload: { channel } }) {
       const { id, name } = channel;
-      state.byId[id].name = name;
+      state.channels.find((c) => c.id === id).name = name;
     },
     removeChannel(state, { payload: { id } }) {
-      state.currentChannelId = null;
-      delete state.byId[id];
-      state.allIds = state.allIds.filter((channelId) => channelId !== id);
+      state.channels = state.channels.filter((c) => c.id !== id);
     },
   },
 });
@@ -89,10 +83,4 @@ export const requestRemoveChannel = (payload) => async () => {
     console.log(error);
     throw error;
   }
-};
-
-// Selectors
-export const selectAllChannles = (state) => {
-  const { byId, allIds } = state.channels;
-  return allIds.map((id) => byId[id]);
 };
