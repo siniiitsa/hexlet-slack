@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../routes';
 import { removeChannel } from './channels';
@@ -41,6 +41,7 @@ export const requestAddMessage = (channelId, payload) => async () => {
 };
 
 // Selectors
-export const selectMessageByChannel = (channelId) => (state) => (
-  state.messages.filter((m) => m.channelId === channelId)
+export const selectMessageByChannel = (channelId) => createSelector(
+  (state) => state.messages,
+  (messages) => messages.filter((m) => m.channelId === channelId),
 );
