@@ -30,7 +30,6 @@ const Dialog = () => {
     (state) => state.channels.currentChannelId,
   );
   const messages = useSelector(selectMessageByChannel(currentChannelId));
-  console.log(messages);
   const messagesBox = useRef(null);
   const newMessageField = useRef(null);
   const dispatch = useDispatch();
