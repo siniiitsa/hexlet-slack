@@ -6,29 +6,18 @@ import { removeChannel } from './channels';
 
 const slice = createSlice({
   name: 'messages',
-  initialState: {
-    byId: {},
-    allIds: [],
-  },
+  initialState: [],
   reducers: {
     addMessage(state, { payload: { message } }) {
-      state.byId[message.id] = message;
-      state.allIds.push(message.id);
+      state.push(message);
     },
     initMessages(state, { payload: { messages } }) {
-      state.byId = messages.reduce((acc, m) => ({ ...acc, [m.id]: m }), {});
-      state.allIds = messages.map((m) => m.id);
+      state.push(...messages);
     },
   },
   extraReducers: {
     [removeChannel](state, { payload: { id: channelId } }) {
-      const { byId, allIds } = state;
-      const idsToStay = allIds.filter((id) => byId[id].channelId !== channelId);
-      state.allIds = idsToStay;
-      state.byId = idsToStay.reduce(
-        (acc, id) => ({ ...acc, [id]: byId[id] }),
-        {},
-      );
+      return state.filter((m) => m.channelId !== channelId);
     },
   },
 });
@@ -52,7 +41,6 @@ export const requestAddMessage = (channelId, payload) => async () => {
 };
 
 // Selectors
-export const selectMessageByChannel = (channelId) => (state) => {
-  const { byId, allIds } = state.messages;
-  return allIds.map((id) => byId[id]).filter((m) => m.channelId === channelId);
-};
+export const selectMessageByChannel = (channelId) => (state) => (
+  state.messages.filter((m) => m.channelId === channelId)
+);
