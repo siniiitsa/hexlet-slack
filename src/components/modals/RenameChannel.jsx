@@ -6,9 +6,14 @@ import cn from 'classnames';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
+import * as yup from 'yup';
+import getSchema from '../../validate';
 import { requestRenameChannel } from '../../store/channels';
 import FieldError from './FieldError';
-import getValidator from '../../validate';
+
+const validationSchema = yup.object({
+  name: getSchema('channelName'),
+});
 
 const RenameChannel = ({ onHide, info }) => {
   const dispatch = useDispatch();
@@ -35,7 +40,11 @@ const RenameChannel = ({ onHide, info }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Formik initialValues={{ name: '' }} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={{ name: '' }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
           {({ isValid, isSubmitting, touched }) => (
             <Form noValidate autoComplete="off">
               <FormGroup>
@@ -48,7 +57,6 @@ const RenameChannel = ({ onHide, info }) => {
                   innerRef={nameField}
                   disabled={isSubmitting}
                   data-testid="input-body"
-                  validate={getValidator('channelName')}
                   name="name"
                 />
                 <ErrorMessage name="name" component={FieldError} />

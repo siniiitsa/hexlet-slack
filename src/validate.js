@@ -1,24 +1,18 @@
-const validateChannelName = (name) => {
-  if (name === '') {
-    return 'Required';
-  }
+import * as yup from 'yup';
 
-  const value = name.trim();
-  if (!/[\p{L}\d]/u.test(value)) {
-    return 'Must have letters or numbers';
-  }
-  if (value.length < 3 || value.length > 20) {
-    return 'Must be 3 to 20 characters long';
-  }
+const validationSchemas = {
+  chatMessage: yup
+    .string()
+    .required()
+    .trim(),
 
-  return null;
+  channelName: yup
+    .string()
+    .required()
+    .trim()
+    .min(3, 'Too short, must be 3 to 20 characters long')
+    .max(20, 'Too long, must be 3 to 20 characters long')
+    .matches(/[\p{L}\d]/u, 'Must have letters or numbers'),
 };
 
-const validateChatMessage = (message) => (message.trim() === '' ? 'Required' : null);
-
-const validators = {
-  channelName: validateChannelName,
-  chatMessage: validateChatMessage,
-};
-
-export default (type) => validators[type];
+export default (schemaName) => validationSchemas[schemaName];

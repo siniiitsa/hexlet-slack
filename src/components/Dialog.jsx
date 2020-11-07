@@ -3,13 +3,18 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
+import * as yup from 'yup';
 import cn from 'classnames';
 import {
   Col, Button, FormGroup, InputGroup,
 } from 'react-bootstrap';
-import getValidator from '../validate';
+import getSchema from '../validate';
 import userContext from '../contexts/userContext';
 import { requestAddMessage, selectMessageByChannel } from '../store/messages';
+
+const validationSchema = yup.object({
+  message: getSchema('chatMessage'),
+});
 
 const renderMessage = ({ text, id, userName }) => (
   <div key={id}>
@@ -65,6 +70,7 @@ const Dialog = () => {
           <Formik
             initialValues={{ message: '' }}
             onSubmit={handleSubmit}
+            validationSchema={validationSchema}
             validateOnMount
           >
             {({ isSubmitting, isValid }) => (
@@ -81,7 +87,6 @@ const Dialog = () => {
                         'mr-2 form-control': true,
                         'is-invalid': !!submitError,
                       })}
-                      validate={getValidator('chatMessage')}
                       disabled={isSubmitting}
                     />
                     <Button
