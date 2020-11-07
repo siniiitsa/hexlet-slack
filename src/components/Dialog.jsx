@@ -56,6 +56,10 @@ const Dialog = () => {
     scrollToBottom(messagesBox);
   }, [messages]);
 
+  useEffect(() => {
+    newMessageField.current.focus();
+  }, [currentChannelId]);
+
   return (
     <Col className="h-100">
       <div className="d-flex flex-column h-100">
