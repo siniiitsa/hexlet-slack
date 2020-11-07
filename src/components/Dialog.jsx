@@ -1,5 +1,5 @@
 import React, {
-  useState, useContext, useRef, useEffect,
+  useContext, useRef, useEffect,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
@@ -30,7 +30,6 @@ const scrollToBottom = (ref) => {
 
 const Dialog = () => {
   const user = useContext(userContext);
-  const [submitError, setSubmitError] = useState(null);
   const currentChannelId = useSelector(
     (state) => state.channels.currentChannelId,
   );
@@ -39,16 +38,16 @@ const Dialog = () => {
   const newMessageField = useRef(null);
   const dispatch = useDispatch();
 
-  const handleSubmit = async (values, formActions) => {
-    setSubmitError(null);
+  const handleSubmit = async (values, { setStatus, resetForm }) => {
+    setStatus(null);
     const payload = { text: values.message, userName: user.name };
 
     try {
       await dispatch(requestAddMessage(currentChannelId, payload));
-      formActions.resetForm();
+      resetForm();
       newMessageField.current.focus();
     } catch (error) {
-      setSubmitError('Network Error');
+      setStatus(error.message);
     }
   };
 
@@ -77,7 +76,7 @@ const Dialog = () => {
             validationSchema={validationSchema}
             validateOnMount
           >
-            {({ isSubmitting, isValid }) => (
+            {({ isSubmitting, isValid, status }) => (
               <Form noValidate autoComplete="off">
                 <FormGroup>
                   <InputGroup>
@@ -89,7 +88,7 @@ const Dialog = () => {
                       aria-label="message"
                       className={cn({
                         'mr-2 form-control': true,
-                        'is-invalid': !!submitError,
+                        'is-invalid': !!status,
                       })}
                       disabled={isSubmitting}
                     />
@@ -101,7 +100,7 @@ const Dialog = () => {
                       Send
                     </Button>
                     <div className="d-block invalid-feedback">
-                      {submitError && submitError}
+                      {status && status}
                       &nbsp;
                     </div>
                   </InputGroup>
