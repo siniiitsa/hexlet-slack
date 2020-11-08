@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const _rollbarConfig = {
+let _rollbarConfig = {
   accessToken: "46e505bc2db347688b0f3982d8cd4163",
   captureUncaught: true,
   captureUnhandledRejections: true,
