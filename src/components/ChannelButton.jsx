@@ -18,8 +18,8 @@ const renderButtonWithMenu = ({
   onClick,
   onRemoveChannel,
   onRenameChannel,
-  renameBtnName,
-  removeBtnName,
+  renameBtnTitle,
+  removeBtnTitle,
 }) => (
   <Dropdown as={ButtonGroup} className="btn-block mb-2">
     <Button
@@ -38,8 +38,8 @@ const renderButtonWithMenu = ({
     />
 
     <Dropdown.Menu>
-      <Dropdown.Item onClick={onRenameChannel}>{renameBtnName}</Dropdown.Item>
-      <Dropdown.Item onClick={onRemoveChannel}>{removeBtnName}</Dropdown.Item>
+      <Dropdown.Item onClick={onRenameChannel}>{renameBtnTitle}</Dropdown.Item>
+      <Dropdown.Item onClick={onRemoveChannel}>{removeBtnTitle}</Dropdown.Item>
     </Dropdown.Menu>
   </Dropdown>
 );
@@ -49,8 +49,8 @@ const ChannelButton = (props) => {
   const render = props.removable ? renderButtonWithMenu : renderButton;
   return render({
     ...props,
-    renameBtnName: t('channels.rename'),
-    removeBtnName: t('channels.remove'),
+    renameBtnTitle: t('channels.rename_btn'),
+    removeBtnTitle: t('channels.remove_btn'),
   });
 };
 

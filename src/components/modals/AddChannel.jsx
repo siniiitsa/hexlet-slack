@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
@@ -16,6 +17,7 @@ const validationSchema = yup.object({
 });
 
 const AddChannel = ({ onHide }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const nameField = useRef(null);
 
@@ -35,7 +37,7 @@ const AddChannel = ({ onHide }) => {
   return (
     <Modal show onHide={onHide}>
       <Modal.Header closeButton onHide={null}>
-        <Modal.Title>Add channel</Modal.Title>
+        <Modal.Title>{t('modals.add_channel_title')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -61,14 +63,14 @@ const AddChannel = ({ onHide }) => {
                 <ErrorMessage name="name" component={FieldError} />
               </FormGroup>
               <Button type="submit" className="mr-2" disabled={isSubmitting}>
-                Add
+                {t('modals.add_btn')}
               </Button>
               <Button
                 onClick={onHide}
                 variant="secondary"
                 disabled={isSubmitting}
               >
-                Cancel
+                {t('modals.cancel_btn')}
               </Button>
             </Form>
           )}

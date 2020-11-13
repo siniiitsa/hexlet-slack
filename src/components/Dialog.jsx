@@ -1,6 +1,7 @@
 import React, {
   useContext, useRef, useEffect,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
@@ -29,6 +30,7 @@ const scrollToBottom = (ref) => {
 };
 
 const Dialog = () => {
+  const { t } = useTranslation();
   const user = useContext(userContext);
   const currentChannelId = useSelector(
     (state) => state.channels.currentChannelId,
@@ -97,7 +99,7 @@ const Dialog = () => {
                       aria-label="submit"
                       disabled={!isValid || isSubmitting}
                     >
-                      Send
+                      {t('dialog.new_message_btn')}
                     </Button>
                     <div className="d-block invalid-feedback">
                       {status && status}

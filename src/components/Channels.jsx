@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, NavItem, Button } from 'react-bootstrap';
 import getModal from './modals';
@@ -14,6 +15,7 @@ const renderModal = (modalInfo, hideModal) => {
 
 const Channels = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [modalInfo, setModalInfo] = useState({ type: null, itemId: null });
   const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector(
@@ -31,7 +33,7 @@ const Channels = () => {
   return (
     <Col xs="3" className="border-right">
       <div className="d-flex my-2">
-        <span>Channels</span>
+        <span>{t('channels.section_title')}</span>
         <Button
           className="ml-auto p-0"
           onClick={createShowModalHandler('addChannel')}

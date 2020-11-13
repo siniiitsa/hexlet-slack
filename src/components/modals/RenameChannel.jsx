@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
@@ -16,6 +17,7 @@ const validationSchema = yup.object({
 });
 
 const RenameChannel = ({ onHide, info }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const nameField = useRef(null);
 
@@ -36,7 +38,7 @@ const RenameChannel = ({ onHide, info }) => {
   return (
     <Modal show onHide={onHide}>
       <Modal.Header closeButton onHide={null}>
-        <Modal.Title>Rename channel</Modal.Title>
+        <Modal.Title>{t('modals.rename_channel_title')}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -62,14 +64,14 @@ const RenameChannel = ({ onHide, info }) => {
                 <ErrorMessage name="name" component={FieldError} />
               </FormGroup>
               <Button type="submit" className="mr-2" disabled={isSubmitting}>
-                Add
+                {t('modals.rename_btn')}
               </Button>
               <Button
                 onClick={onHide}
                 variant="secondary"
                 disabled={isSubmitting}
               >
-                Cancel
+                {t('modals.cancel_btn')}
               </Button>
             </Form>
           )}

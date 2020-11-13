@@ -4,8 +4,8 @@ import i18n from 'i18next';
 
 yup.setLocale({
   string: {
-    min: i18n.t('channels.errors.invalid_length'),
-    max: i18n.t('channels.errors.invalid_length'),
+    min: i18n.t('errors.invalid_length'),
+    max: i18n.t('errors.invalid_length'),
   },
 });
 
@@ -21,7 +21,7 @@ const validationSchemas = {
     .trim()
     .min(3)
     .max(20)
-    .matches(/[\p{L}\d]/u, i18n.t('channels.errors.required_chars')),
+    .matches(/[\p{L}\d]/u, i18n.t('errors.required_chars')),
 };
 
 export default (schemaName) => validationSchemas[schemaName];
