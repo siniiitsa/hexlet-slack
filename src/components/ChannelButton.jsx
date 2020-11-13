@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const renderButton = ({ name, variant, onClick }) => (
   <Button
@@ -17,6 +18,8 @@ const renderButtonWithMenu = ({
   onClick,
   onRemoveChannel,
   onRenameChannel,
+  renameBtnName,
+  removeBtnName,
 }) => (
   <Dropdown as={ButtonGroup} className="btn-block mb-2">
     <Button
@@ -35,15 +38,20 @@ const renderButtonWithMenu = ({
     />
 
     <Dropdown.Menu>
-      <Dropdown.Item onClick={onRenameChannel}>Rename</Dropdown.Item>
-      <Dropdown.Item onClick={onRemoveChannel}>Remove</Dropdown.Item>
+      <Dropdown.Item onClick={onRenameChannel}>{renameBtnName}</Dropdown.Item>
+      <Dropdown.Item onClick={onRemoveChannel}>{removeBtnName}</Dropdown.Item>
     </Dropdown.Menu>
   </Dropdown>
 );
 
 const ChannelButton = (props) => {
+  const { t } = useTranslation();
   const render = props.removable ? renderButtonWithMenu : renderButton;
-  return render(props);
+  return render({
+    ...props,
+    renameBtnName: t('channels.rename'),
+    removeBtnName: t('channels.remove'),
+  });
 };
 
 export default ChannelButton;
