@@ -1,21 +1,17 @@
 // @ts-check
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import '../assets/application.scss';
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import faker from 'faker';
 import cookies from 'js-cookie';
 import io from 'socket.io-client';
-import i18n from 'i18next';
 
-import { initReactI18next } from 'react-i18next';
-import resources from './locales';
+import '../assets/application.scss';
+import './locales';
 
 import App from './components/App';
 import userContext from './contexts/userContext';
@@ -35,11 +31,6 @@ export default ({ messages, channels, currentChannelId }) => {
   } else {
     initProdErrorsTracking();
   }
-
-  i18n.use(initReactI18next).init({
-    resources,
-    lng: 'en',
-  });
 
   let userName = cookies.get('userName');
   if (!userName) {
@@ -80,6 +71,6 @@ export default ({ messages, channels, currentChannelId }) => {
         <App />
       </Provider>
     </userContext.Provider>,
-    document.getElementById('chat')
+    document.getElementById('chat'),
   );
 };

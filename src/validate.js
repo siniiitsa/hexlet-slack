@@ -1,10 +1,11 @@
 /* eslint-disable no-template-curly-in-string */
 import * as yup from 'yup';
+import i18n from 'i18next';
 
 yup.setLocale({
   string: {
-    min: 'Too short, must be 3 to 20 characters long',
-    max: 'Too short, must be 3 to 20 characters long',
+    min: i18n.t('channels.errors.invalid_length'),
+    max: i18n.t('channels.errors.invalid_length'),
   },
 });
 
@@ -20,7 +21,7 @@ const validationSchemas = {
     .trim()
     .min(3)
     .max(20)
-    .matches(/[\p{L}\d]/u, 'Must have letters or numbers'),
+    .matches(/[\p{L}\d]/u, i18n.t('channels.errors.required_chars')),
 };
 
 export default (schemaName) => validationSchemas[schemaName];
