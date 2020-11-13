@@ -11,7 +11,7 @@ import cookies from 'js-cookie';
 import io from 'socket.io-client';
 
 import '../assets/application.scss';
-import './locales';
+import './services/i18n';
 
 import App from './components/App';
 import userContext from './contexts/userContext';
